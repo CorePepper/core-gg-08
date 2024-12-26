@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
+import Reviews from "@/components/Reviews";
 import Team from "@/components/Team";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
@@ -13,6 +14,7 @@ const Index = () => {
       <Navigation />
       <Hero />
       <Features />
+      <Reviews />
       <CTASection />
       <Team />
       <About />
