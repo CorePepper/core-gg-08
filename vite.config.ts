@@ -9,4 +9,10 @@ export default defineConfig({
     'import.meta.env.VITE_SITE_DESCRIPTION': JSON.stringify('あなたのサイトの説明文'),
     'import.meta.env.VITE_OG_IMAGE': JSON.stringify('https://example.com/ogimage.png'),
   },
+  // 下記を追記してください
+  resolve:{
+    alias: {
+      "@": '/src'
+    }
+  }
 });
