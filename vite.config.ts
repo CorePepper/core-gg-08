@@ -1,18 +1,33 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import { componentTagger } from "lovable-tagger";
+import { imagetools } from 'vite-imagetools';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  define: {
-    'import.meta.env.VITE_SITE_TITLE': JSON.stringify('あなたのサイトのタイトル'),
-    'import.meta.env.VITE_SITE_DESCRIPTION': JSON.stringify('あなたのサイトの説明文'),
-    'import.meta.env.VITE_OG_IMAGE': JSON.stringify('https://example.com/ogimage.png'),
+export default defineConfig(({ mode }) => ({
+  server: {
+    host: "::",
+    port: 8080,
   },
-  // 下記を追記してください
-  resolve:{
+  plugins: [
+    react(),
+    imagetools(),
+    mode === 'development' &&
+    componentTagger(),
+  ].filter(Boolean),
+  resolve: {
     alias: {
-      "@": '/src'
-    }
-  }
-});
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@radix-ui/react-toast', '@radix-ui/react-tooltip'],
+        },
+      },
+    },
+  },
+}));
